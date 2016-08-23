@@ -5,9 +5,13 @@ from setuptools import setup, find_packages
 
 here = path.abspath(path.dirname(__file__))
 
-# Get the long description from the README file
-with open(path.join(here, 'README.txt')) as f:
-    long_description = f.read()
+README = path.join(here, 'README.txt')
+
+if path.isfile(README):
+    with open(README) as f:
+        long_description = f.read()
+else:
+    long_description = ''
 
 setup(
     name='django-madcap-flare',
@@ -35,7 +39,7 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     keywords='django madcap flare web development',
-    packages=find_packages(exclude=['contrib', 'docs', 'tests']),
+    packages=['madcap_flare'],
     install_requires=['django'],
     extras_require={
         'dev': [],

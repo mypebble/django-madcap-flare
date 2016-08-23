@@ -8,7 +8,7 @@ register = template.Library()
 
 
 @register.simple_tag(takes_context=True)
-def contextual_help_url(context):
+def madcap_flare_help(context):
     """Render the contextual help button.
 
     Using the given context key "help_key", determine the correct contextual
@@ -20,7 +20,7 @@ def contextual_help_url(context):
     help_key = context.get('help_key')
 
     return '{root}{help_file}{help_id}'.format(
-        root=settings.CONTEXTUAL_HELP_ROOT,
+        root=settings.MADCAP_FLARE_ROOT,
         help_file=help_file,
         help_id=_get_help_id(help_key))
 
@@ -31,6 +31,8 @@ def _get_help_id(help_key):
     If help_key is a falsy value, this returns an empty string.
     If the lookup can't find the help_key, this returns an empty string.
     """
+    help_mapping = _get_help_mapping()
+
     if not help_key:
         return ''
     if help_key not in help_mapping:
@@ -40,3 +42,11 @@ def _get_help_id(help_key):
                     help_mapping.keys()))))
 
     return '#cshid={map}'.format(map=help_mapping[help_key])
+
+
+def _get_help_mapping():
+    try:
+        return settings.MADCAP_FLARE_TAGS
+    except AttributeError:
+        raise ImproperlyConfigured(
+            u'MADCAP_FLARE_TAGS must be set in settings.py')

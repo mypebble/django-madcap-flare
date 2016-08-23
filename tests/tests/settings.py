@@ -126,3 +126,5 @@ STATIC_URL = '/static/'
 MADCAP_FLARE_TAGS = {
     'test-flare': '1011',
 }
+
+MADCAP_FLARE_ROOT = 'http://example.com/'
