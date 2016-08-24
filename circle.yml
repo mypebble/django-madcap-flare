@@ -7,5 +7,7 @@ dependencies:
     - python setup.py develop
 
 test:
+  pre:
+    - mkdir -p $CIRCLE_TEST_REPORTS/nosetests
   override:
     - python tests/manage.py test
