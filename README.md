@@ -102,5 +102,8 @@ With the `help_key` set above, this will output:
 To test the integration just run:
 
 ```bash
+virtualenv venv
+. venv/bin/activate
+pip install -r requirements.txt
 python tests/manage.py test
 ```

@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_nose',
+
     'madcap_flare',
 
     'tests.test_helper',
@@ -128,3 +130,16 @@ MADCAP_FLARE_TAGS = {
 }
 
 MADCAP_FLARE_ROOT = 'http://example.com/'
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=madcap_flare',
+    '--cover-inclusive',
+    '--with-xunit'
+]
+
+_reports = os.environ.get('CIRCLE_TEST_REPORTS')
+if _reports is not None:
+    NOSE_ARGS.append('--xunit-file={}'.format(_reports))
