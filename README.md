@@ -108,3 +108,11 @@ pip install -r requirements.txt
 python setup.py develop
 python tests/manage.py test
 ```
+
+### Writing Docs for PyPI
+
+To convert the docs to RST for PyPI:
+
+```bash
+pandoc --from=markdown --to=rst --output=README.txt README.md
+```
