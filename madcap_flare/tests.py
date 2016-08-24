@@ -4,7 +4,7 @@ from StringIO import StringIO
 from os import path
 from unittest import TestCase
 
-from mock import patch
+from mock import MagicMock, patch
 
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management import call_command
@@ -39,7 +39,10 @@ class TemplateTagTestCase(TestCase):
         def _error(*args, **kwargs):
             raise AttributeError
 
-        settings.MADCAP_FLARE_ROOT.side_effect = _error
+        error = MagicMock()
+        error.side_effect = _error
+
+        settings.MADCAP_FLARE_ROOT.__get__ = error
 
         self.assertRaises(
             ImproperlyConfigured,
@@ -53,12 +56,21 @@ class TemplateTagTestCase(TestCase):
         def _error(*args, **kwargs):
             raise AttributeError
 
-        settings.MADCAP_FLARE_TAGS.side_effect = _error
+        settings.MADCAP_FLARE_ROOT = 'https://www.example.com/'
+        error = MagicMock()
+        error.side_effect = _error
+        settings.MADCAP_FLARE_TAGS.__get__ = error
 
         self.assertRaises(
             ImproperlyConfigured,
             tags.madcap_flare_help,
             {'help_key': 'test-flare'})
+
+    def test_missing_help_key(self):
+        """A missing help key just gives the default URL.
+        """
+        output = tags.madcap_flare_help({})
+        self.assertEqual(output, 'http://example.com/Default.htm')
 
 
 class CommandTestCase(TestCase):

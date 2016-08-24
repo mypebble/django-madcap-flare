@@ -137,7 +137,9 @@ NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=madcap_flare',
     '--cover-inclusive',
-    '--with-xunit'
+    '--with-xunit',
+    '--cover-min-percentage=95',
+    '--cover-html',
 ]
 
 _reports = os.environ.get('CIRCLE_TEST_REPORTS')

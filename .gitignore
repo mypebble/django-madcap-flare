@@ -90,3 +90,5 @@ ENV/
 
 
 README.txt
+# Coverage HTML output
+cover/*
