@@ -10,6 +10,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.management import call_command
 
 from madcap_flare.templatetags import madcap_flare_tags as tags
+from madcap_flare.views import MadcapFlareMixin
 
 
 class TemplateTagTestCase(TestCase):
@@ -83,3 +84,50 @@ class CommandTestCase(TestCase):
         fake_stdout = StringIO()
         call_command('get_help_mapping', file_path, stdout=fake_stdout)
         self.assertEqual(fake_stdout.getvalue(), output)
+
+
+class ViewTestCase(TestCase):
+    """Test the MadcapFlareMixin.
+    """
+
+    def test_valid_help_key(self):
+        """A valid key sets up the correct context.
+        """
+        test_obj = _MadCapFlareMixinTest('test-key')
+
+        self.assertEqual(test_obj.get_help_key(), 'test-key')
+        context = test_obj.get_context_data()
+        self.assertEqual(context['help_key'], 'test-key')
+
+    def test_no_help_key(self):
+        """No help key raises an ImproperlyConfigured.
+        """
+        test_obj = _MadCapFlareMixinTest()
+
+        self.assertRaises(
+            ImproperlyConfigured,
+            test_obj.get_help_key)
+
+        self.assertRaises(
+            ImproperlyConfigured,
+            test_obj.get_context_data)
+
+
+class _MadCapFlareBaseClass(object):
+    """Base class for the test framework.
+    """
+
+    def get_context_data(self, **kwargs):  # pylint: disable=R0201
+        """Return an empty dict.
+        """
+        return {}
+
+
+class _MadCapFlareMixinTest(MadcapFlareMixin, _MadCapFlareBaseClass):
+    """Test Class for the MadcapFlareMixin.
+    """
+
+    def __init__(self, help_key=None):
+        """Initialise with a help_key.
+        """
+        self.help_key = help_key

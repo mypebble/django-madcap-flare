@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     help = u'Parse an MCF .h file and output a dict.'
 
-    def add_arguments(self, parser):
+    def add_arguments(self, parser):  # pylint: disable=R0201
         """Parse.
         """
         parser.add_argument(
