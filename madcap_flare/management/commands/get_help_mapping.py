@@ -21,8 +21,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         """Run the command.
         """
-        content = options['header'].read()
+        content = options['header'].read().replace('\t', ' ')
 
         lines = content.splitlines()
-        data_dict = dict(line[1:3] for line in lines)
-        self.stdout.write(pformat(data_dict))
+        data_dict = dict(line.split(' ')[1:3] for line in lines if line)
+        output = pformat(data_dict, indent=4)
+        output = u'{{\n {out}\n}}'.format(out=output[1:-1])
+        self.stdout.write(output)
