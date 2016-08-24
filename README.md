@@ -96,3 +96,11 @@ With the `help_key` set above, this will output:
   <a href="https://www.example.com/help_topics/Default.htm#cshid=1000">documentation</a>
 </p>
 ```
+
+## Developing
+
+To test the integration just run:
+
+```bash
+python tests/manage.py test
+```
