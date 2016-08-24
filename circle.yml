@@ -2,6 +2,10 @@ machine:
   environment:
     DJANGO_SETTINGS_MODULE: tests.settings
 
+dependencies:
+  post:
+    - python setup.py develop
+
 test:
   override:
     - python tests/manage.py test
