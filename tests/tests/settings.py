@@ -142,4 +142,5 @@ NOSE_ARGS = [
 
 _reports = os.environ.get('CIRCLE_TEST_REPORTS')
 if _reports is not None:
-    NOSE_ARGS.append('--xunit-file={}'.format(_reports))
+    _outfile = os.path.join(_reports, 'nosetests/nosetests.xml')
+    NOSE_ARGS.append('--xunit-file={}'.format(_outfile))
