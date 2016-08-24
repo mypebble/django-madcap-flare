@@ -1,7 +1,7 @@
 """Standard setuptools.
 """
 from os import path
-from setuptools import setup
+from setuptools import setup, find_packages
 
 here = path.abspath(path.dirname(__file__))
 
@@ -15,7 +15,7 @@ else:
 
 setup(
     name='django-madcap-flare',
-    version='0.0.2',
+    version='0.0.3',
 
     description='Integrate Madcap Flare docs into your Django project',
     long_description=long_description,
@@ -39,7 +39,7 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     keywords='django madcap flare web development',
-    packages=['madcap_flare'],
+    packages=find_packages(),
     install_requires=['django'],
     extras_require={
         'dev': [],
