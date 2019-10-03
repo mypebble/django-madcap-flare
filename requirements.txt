@@ -1,4 +1,4 @@
-Django==1.10
+Django==1.11.23
 argparse==1.2.1
 coverage==4.2
 django-nose==1.4.4
